@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>د. محمد محمود الأحمد | مجمع طب وجراحة الفم والأسنان الذكي</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@600;800&family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyberDark: '#070b13',
+            cyberCard: 'rgba(15, 23, 42, 0.75)',
+            neonCyan: '#00f2fe',
+            neonTeal: '#4facfe',
+            neonGreen: '#00f5a0',
+            neonPurple: '#7928ca'
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+            tajawal: ['Tajawal', 'sans-serif'],
+            tech: ['Orbitron', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #050811;
+      color: #e2e8f0;
+      font-family: 'Tajawal', sans-serif;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(121, 40, 202, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(0, 245, 160, 0.06) 0%, transparent 50%);
+    }
+
+    /* Glassmorphism Styles */
+    .glass-panel {
+      background: rgba(13, 20, 36, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 242, 254, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    .glass-panel-glow:hover {
+      border-color: rgba(0, 242, 254, 0.5);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
+    }
+
+    /* Animated Floating Teeth Bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 242, 254, 0.3), rgba(121, 40, 202, 0.1));
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      box-shadow: inset 0 0 15px rgba(0, 242, 254, 0.4), 0 0 20px rgba(0, 242, 254, 0.2);
+      animation: floatUp 14s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.8) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-15vh) scale(1.1) rotate(360deg); opacity: 0; }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #070b13; }
+    ::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 4px; }
+  </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-black">
+
+  <!-- Background Floating Bio-Bubbles -->
+  <div id="bubble-container" class="fixed inset-0 overflow-hidden pointer-events-none"></div>
+
+  <!-- Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-4 lg:px-12 py-3">
+    <nav class="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-black font-black text-xl shadow-lg shadow-cyan-500/30">
+          <i class="fa-solid fa-tooth text-white text-lg"></i>
+        </div>
+        <div>
+          <span class="text-white font-extrabold text-lg block leading-tight font-cairo">د. محمد محمود الأحمد</span>
+          <span class="text-cyan-400 text-xs font-semibold tracking-wider font-tech">DIGITAL DENTAL ODYSSEY</span>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+        <a href="#hero" class="hover:text-cyan-400 transition-colors">الرئيسية</a>
+        <a href="#history" class="hover:text-cyan-400 transition-colors">ملحمة التاريخ</a>
+        <a href="#zoology" class="hover:text-cyan-400 transition-colors">عجائب الأسنان</a>
+        <a href="#innovations" class="hover:text-cyan-400 transition-colors">العيادة الذكية</a>
+        <a href="#contact" class="hover:text-cyan-400 transition-colors">الاتصال والحجز</a>
+      </div>
+
+      <a href="#contact" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 hover:scale-105 transition-all">
+        حجز موعد رقمي
+      </a>
+    </nav>
+  </header>
+
+  <!-- Hero Section with 3D Interactive Tooth Engine -->
+  <section id="hero" class="relative min-h-screen pt-28 pb-16 flex items-center justify-center px-4">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Text & Vision -->
+      <div class="lg:col-span-6 space-y-6 z-20">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-xs font-semibold backdrop-blur-md">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          المنظور المستقبلي المتطور لطب وجراحة الأسنان
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-black text-white leading-tight font-cairo">
+          هندسة الابتسامة <br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">
+            بين فجر التاريخ وثورة الذكاء
+          </span>
+        </h1>
+
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed text-justify">
+          مرحباً بكم في الصرح الرقمي للدكتور <strong>محمد محمود الأحمد</strong>. حيث نلتقي بالطب السني ليس كإجراء تقليدي، بل كرحلة تجمع بين حكمة الطب النبوي التطهيري، أسرار المينا الحيوية في الطبيعة، وأحدث تقنيات التشخيص المجهري والطباعة ثلاثية الأبعاد.
+        </p>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
+          <div class="p-3 glass-panel rounded-xl text-center">
+            <span class="text-2xl font-black text-cyan-400 font-tech block">3D</span>
+            <span class="text-xs text-slate-400">تصوير مجهري</span>
+          </div>
+          <div class="p-3 glass-panel rounded-xl text-center">
+            <span class="text-2xl font-black text-emerald-400 font-tech block">100%</span>
+            <span class="text-xs text-slate-400">دقة رقمية</span>
+          </div>
+          <div class="p-3 glass-panel rounded-xl text-center">
+            <span class="text-2xl font-black text-purple-400 font-tech block">AI</span>
+            <span class="text-xs text-slate-400">تحليل فوري للابتسامة</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="#innovations" class="px-6 py-3.5 rounded-xl font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/30 transition-all flex items-center gap-2">
+            <span>استكشف ابتكارات العيادة</span>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <button onclick="toggleWireframe()" class="px-6 py-3.5 rounded-xl font-bold glass-panel hover:bg-slate-800/50 text-cyan-300 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-cube"></i>
+            <span>تبديل العرض الشعاعي (Wireframe)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Canvas -->
+      <div class="lg:col-span-6 relative flex items-center justify-center">
+        <div class="w-full h-[450px] sm:h-[550px] relative glass-panel rounded-3xl overflow-hidden shadow-2xl border-cyan-500/30">
+          <div id="three-canvas-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+          
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-slate-400 px-4 py-2 glass-panel rounded-xl pointer-events-none">
+            <span class="flex items-center gap-1">
+              <i class="fa-solid fa-arrows-up-down-left-right text-cyan-400"></i>
+              حرّك الفأرة لتدوير واستكشاف المجسم المجهري
+            </span>
+            <span id="model-status" class="text-cyan-300 font-tech">SCAN ACTIVE</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 1: The Grand Dental Odyssey (Historical & Spiritual Timeline) -->
+  <section id="history" class="py-20 px-4 relative">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="text-center space-y-4 max-w-3xl mx-auto">
+        <span class="text-cyan-400 text-xs font-bold uppercase tracking-widest font-tech">CHRONICLES OF DENTISTRY</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white font-cairo">ملحمة طب الأسنان عبر العصور</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          تطور ممارسة طب الأسنان عبر مسار البشرية: من الطين والبرديات، مروراً بإعجاز التطهير والطب النبوي، وصولاً إلى عصر النانو والجينات.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Card 1: Ancient Dawn -->
+        <div class="glass-panel glass-panel-glow p-6 rounded-2xl relative overflow-hidden transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-scroll"></i>
+          </div>
+          <span class="text-xs font-tech text-amber-400 font-bold">5000 ق.م - الحضارات الأولى</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-2 font-cairo">أسطورة دودة الأسنان والبرديات</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            اعتقد السومريون والفراعنة أن نخور الأسنان سببها دودة خفية. في بردية "إيبرس" المصرية، وُثقت أولى خلطات الراتنج والملكيت لتثبيت الأسنان المتخلخلة بأسلاك الذهب في الفكين.
+          </p>
+        </div>
+
+        <!-- Card 2: Prophetic & Islamic Era -->
+        <div class="glass-panel glass-panel-glow p-6 rounded-2xl relative overflow-hidden border-emerald-500/30 transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <span class="text-xs font-tech text-emerald-400 font-bold">القرن السابع الميلادي - الإعجاز الوقائي</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-2 font-cairo">الطب النبوي ومدرسة الزهراوي</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            أسس الهدي النبوي لقاعدة الحماية الفموية بالسواك (شجرة الأراك المحتوية على الفلورايد والسلفادورين القاتل للبكتيريا). وتبعه أبو القاسم الزهراوي في الأندلس بتصميم 200 أداة جراحية لعلاج الفكين وجبر الأسنان.
+          </p>
+        </div>
+
+        <!-- Card 3: Chemical Revolution -->
+        <div class="glass-panel glass-panel-glow p-6 rounded-2xl relative overflow-hidden border-cyan-500/30 transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-flask"></i>
+          </div>
+          <span class="text-xs font-tech text-cyan-400 font-bold">القرن 19 و 20 - الثورة الكيميائية</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-2 font-cairo">التخدير، الفلورايد والكومبوزيت</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ظهور غاز النيتروز (غاز الضحك) والأثير أحدث قفزة في التخدير الجراحي، تلاه اكتشاف دور الفلورايد في تقوية الهيدروكسي أباتيت، وابتكار البوليمرات والكومبوزيت الضوئي للترميم غير المرئي.
+          </p>
+        </div>
+
+        <!-- Card 4: Cybernetic & AI -->
+        <div class="glass-panel glass-panel-glow p-6 rounded-2xl relative overflow-hidden border-purple-500/30 transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-4">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <span class="text-xs font-tech text-purple-400 font-bold">عصر النانو والـ AI الحديث</span>
+          <h3 class="text-xl font-bold text-white mt-1 mb-2 font-cairo">الطباعة الحيوية والمجهر الذكي</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            تصنيع التركيبات بالكامل عبر الكاميرات الفموية وأجهزة CAD/CAM في جلسة واحدة. استخدام الخلايا الجذعية في أبحاث إعادة إنبات السن بيولوجياً بدلاً من التعويض الصناعي.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Zoological Dental Magazine (Bento Grid) -->
+  <section id="zoology" class="py-20 px-4 bg-slate-950/40">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="text-center space-y-4 max-w-3xl mx-auto">
+        <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest font-tech">BIOLOGICAL PHENOMENA</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white font-cairo">عجائب الأسنان في مملكة الأحياء</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          الأسنان ليست مجرد عظام بيضاء، بل تحف هندسية طبيعية تتكيف مع أقسى البيئات الحيوية حول كوكبنا.
+        </p>
+      </div>
+
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        
+        <!-- Bento 1: Giant Shark (Spans 2 cols) -->
+        <div class="md:col-span-2 glass-panel glass-panel-glow p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold">
+              <i class="fa-solid fa-water"></i> المحيطات العميقة
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white font-cairo">أسماك القرش: 30,000 سن في دورة حياة واحدة</h3>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              لا تمتلك القروش أسناناً ثابتة بجذور في الفك، بل تمتلك سلاسل متتابعة تعمل مثل الحزام الناقل (Conveyor Belt). عند سقوط سن في المعركة، يتقدم سن احتياطي خلال 24 ساعة فقط لتعويضه فوراً دون التهاب أو نزيف.
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-slate-800 text-cyan-400 font-tech text-xs">
+            <span>DENTAL REGENERATION PROTOCOL</span>
+            <span>FACTOR: CONTINUOUS ROW</span>
+          </div>
+        </div>
+
+        <!-- Bento 2: The Iron Beaver -->
+        <div class="glass-panel glass-panel-glow p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold">
+              <i class="fa-solid fa-tree"></i> غابات الشمال
+            </div>
+            <h3 class="text-xl font-bold text-white font-cairo">قندس الأنهار: قواطع من الحديد الصلب</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              أسنان القندس لونها برتقالي داكن لسبب مذهل: مينا أسنانه مشبعة بمركبات الحديد بدلاً من المغنيسيوم، مما يمنحه قواطع حادة تستطيع قطع الأشجار الحجرية دون أن تتعرض للتسوس الحمضي.
+            </p>
+          </div>
+          <div class="pt-4 text-amber-400 font-tech text-xs font-bold">IRON-ENRICHED ENAMEL</div>
+        </div>
+
+        <!-- Bento 3: The Garden Snail -->
+        <div class="glass-panel glass-panel-glow p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold">
+              <i class="fa-solid fa-microscope"></i> المفاجأة الميكروسكوبية
+            </div>
+            <h3 class="text-xl font-bold text-white font-cairo">حلزون الحدائق: 14,000 سن فتاك</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              يمتلك الحلزون شريطاً مجهرياً يُسمى "الراديولا" (Radula) يحتوي على أكثر من 14 ألف سن دقيق، ومركب مادة السن يُعد بيولوجياً أقوى من التيتانيوم بنسبة 300%.
+            </p>
+          </div>
+          <div class="pt-4 text-purple-400 font-tech text-xs font-bold">RADULA RESISTANCE: 4.9 GPa</div>
+        </div>
+
+        <!-- Bento 4: The Narwhal Horn -->
+        <div class="glass-panel glass-panel-glow p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">
+              <i class="fa-solid fa-snowflake"></i> القطب الشمالي
+            </div>
+            <h3 class="text-xl font-bold text-white font-cairo">حوت المونوكير: السن المستشعر</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              قرن حوت النروال الأسطوري ليس قرناً على الإطلاق، بل سن ناب أيسر حلزوني يخترق شفته العليا ويصل طوله إلى مترين ونصف، ويحتوي على 10 ملايين نهاية عصبية لاستشعار ملوحة المحيط.
+            </p>
+          </div>
+          <div class="pt-4 text-blue-400 font-tech text-xs font-bold">10M SENSORY CHANNELS</div>
+        </div>
+
+        <!-- Bento 5: Elephant Molars (Spans 2 cols) -->
+        <div class="md:col-span-2 glass-panel glass-panel-glow p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
+              <i class="fa-solid fa-mountain"></i> السافانا
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white font-cairo">أضراس الفيل الإفريقي: التبديل الأفقي المعقد</h3>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              على عكس البشر الذين يتبدل لديهم طقم الأسنان عمودياً مرة واحدة في العمر، تتبدل أضراس الفيلة أفقياً من الخلف إلى الأمام ست مرات متتالية عبر حياتها. وزن الضرس الواحد يصل إلى 4 كيلوجرامات!
+            </p>
+          </div>
+          <div class="pt-6 flex items-center justify-between border-t border-slate-800 text-emerald-400 font-tech text-xs">
+            <span>HORIZONTAL POLAR REPLACEMENT</span>
+            <span>MASS: 4.5 KG PER TOOTH</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Smart Clinic Modern Innovations -->
+  <section id="innovations" class="py-20 px-4">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="text-center space-y-4 max-w-3xl mx-auto">
+        <span class="text-cyan-400 text-xs font-bold uppercase tracking-widest font-tech">ADVANCED DIGITAL PRACTICE</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white font-cairo">مشاريع العيادة السنية المتقدمة</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          التقنيات السريرية المعتمدة في عيادة الدكتور محمد الأحمد لتحويل الجراحة والعلاج التجميلي إلى عملية رقمية دقيقة وخالية من الألم.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Tech 1 -->
+        <div class="glass-panel p-8 rounded-3xl space-y-4 border-cyan-500/20">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-3xl">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white font-cairo">ملف المريض الذكي عبر الـ QR الموحد</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ربط صور الأشعة السينية البانورامية وسجلات المريض ببطاقة استجابة سريعة (Health-QR) مشفرة، تتيح للمريض مراجعة خطته العلاجية ومواعيد تبديل التقويم عبر هاتفه بنقرة واحدة.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> أرشيف سحابي مشفر</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> قراءة مباشرة عبر كاميرا الهاتف</li>
+          </ul>
+        </div>
+
+        <!-- Tech 2 -->
+        <div class="glass-panel p-8 rounded-3xl space-y-4 border-purple-500/20">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-3xl">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white font-cairo">تصميم الابتسامة الرقمي (DSD) ثلاثي الأبعاد</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            تصوير ملامح الوجه وحركة الشفاه ديناميكياً لتصميم شكل التيجان وقشور الخزف (Veneers) بدقة الميكرون، مع إمكانية تجربة المريض لابتسامته المستقبلية على الشاشة قبل برد أي سن.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> مواءمة النسبة الذهبية للوجه</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> محاكاة واقعية ثلاثية الأبعاد</li>
+          </ul>
+        </div>
+
+        <!-- Tech 3 -->
+        <div class="glass-panel p-8 rounded-3xl space-y-4 border-emerald-500/20">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-3xl">
+            <i class="fa-solid fa-crosshairs"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white font-cairo">الزراعة الجراحية الموجهة حاسوبياً</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            استخدام الأدلة الجراحية ثلاثية الأبعاد المطبوعة بالليزر (Surgical Guides) لغرس زرعات التيتانيوم دون الحاجة لخياطة جراحية أو شق اللثة، مع تقليص وقت الشفاء إلى النصف.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 pt-2 border-t border-slate-800">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> تجنب إصابة الأعصاب الحيوية</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> تحميل فوري للأسنان المؤقتة</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Interactive Appointment & Contact -->
+  <section id="contact" class="py-20 px-4 bg-slate-950/60">
+    <div class="max-w-4xl mx-auto glass-panel p-8 sm:p-12 rounded-3xl border-cyan-500/30 shadow-2xl space-y-8">
+      <div class="text-center space-y-3">
+        <h2 class="text-3xl sm:text-4xl font-black text-white font-cairo">حجز استشارة وفحص رقمي</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          تواصل مباشرة مع عيادة د. محمد محمود الأحمد لبدء فحص الابتسامة المخصص وتحديد الخطة العلاجية الملائمة.
+        </p>
+      </div>
+
+      <form onsubmit="handleBooking(event)" class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-2">الاسم الكامل</label>
+            <input type="text" required placeholder="محمد الأحمد" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-cyan-400 text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-2">رقم الهاتف / واتساب</label>
+            <input type="tel" required placeholder="+963 ..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-cyan-400 text-sm text-left" dir="ltr" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">نوع الاستشارة المطلوبة</label>
+          <select class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-cyan-400 text-sm">
+            <option>استشارة وزراعة أسنان رقمية</option>
+            <option>تصميم الابتسامة وتبييض الأسنان بالليزر</option>
+            <option>جراحة الفم وعلاج العصب المجهري</option>
+            <option>فحص وقائي عام وتنظيف طبقات الجير</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-2">ملاحظات أو أعراض خاصة</label>
+          <textarea rows="3" placeholder="اشرح ما تشعر به أو الاستفسار الذي ترغب به..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-cyan-400 text-sm"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-4 rounded-xl font-black bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/25 transition-all text-base">
+          تأكيد طلب الموعد عبر المنظومة الذكية
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Interactive Mascot / Smart Bot Widget -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <button onclick="toggleBotChat()" class="relative group w-16 h-16 rounded-full glass-panel border border-cyan-400/50 flex items-center justify-center text-cyan-300 shadow-xl shadow-cyan-500/30 hover:scale-110 transition-all">
+      <i class="fa-solid fa-tooth text-2xl group-hover:rotate-12 transition-transform"></i>
+      <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-slate-950"></span>
+    </button>
+    
+    <!-- Bot Pop-up Card -->
+    <div id="bot-card" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 glass-panel p-5 rounded-3xl border border-cyan-500/30 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500 text-black flex items-center justify-center font-bold">
+            <i class="fa-solid fa-user-doctor"></i>
+          </div>
+          <div>
+            <span class="text-white text-xs font-bold block font-cairo">المساعد السني الذكي (د. سين)</span>
+            <span class="text-emerald-400 text-[10px] block font-tech">ONLINE & ANALYZING</span>
+          </div>
+        </div>
+        <button onclick="toggleBotChat()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="bot-message" class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+        أهلاً بك! أنا المساعد الافتراضي لعيادة د. محمد محمود الأحمد. هل تعلم أن تفريش الأسنان بزاوية 45 درجة مع اللثة يزيل 80% من البلاك المتراكم دون تجريح المينا؟
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-[11px] font-semibold">
+        <button onclick="botInsight('history')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-500/20 text-cyan-300 border border-slate-700 text-center transition-colors">
+          أسرار السواك
+        </button>
+        <button onclick="botInsight('sharks')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-500/20 text-cyan-300 border border-slate-700 text-center transition-colors">
+          غرائب القروش
+        </button>
+        <button onclick="botInsight('tips')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-500/20 text-cyan-300 border border-slate-700 text-center transition-colors">
+          نصيحة ألم العصب
+        </button>
+        <button onclick="botInsight('qr')" class="p-2 rounded-lg bg-slate-800/80 hover:bg-cyan-500/20 text-cyan-300 border border-slate-700 text-center transition-colors">
+          السجل بالـ QR
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 py-10 px-4 text-center text-xs text-slate-500 space-y-2">
+    <p>جميع الحقوق محفوظة &copy; 2026 د. محمد محمود الأحمد - صُممت المنظومة الرقمية بدقة هندسية عالية</p>
+    <p class="font-tech text-cyan-500/70">DEPLOYED VIA GITHUB ACTIONS AUTOMATION</p>
+  </footer>
+
+  <!-- Three.js 3D Engine & Interactive Logic -->
+  <script>
+    // 1. Generate Floating Bubbles
+    const bubbleContainer = document.getElementById('bubble-container');
+    const bubbleCount = 18;
+    for (let i = 0; i < bubbleCount; i++) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      const size = Math.random() * 45 + 25;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${Math.random() * 98}%`;
+      bubble.style.animationDuration = `${Math.random() * 8 + 10}s`;
+      bubble.style.animationDelay = `${Math.random() * 8}s`;
+      
+      // Inject miniature icon inside some bubbles
+      if (Math.random() > 0.4) {
+        bubble.innerHTML = `<div class="w-full h-full flex items-center justify-center text-[10px] text-cyan-300 opacity-60"><i class="fa-solid fa-tooth"></i></div>`;
+      }
+      bubbleContainer.appendChild(bubble);
+    }
+
+    // 2. Three.js 3D Anatomical Stylized Tooth Model
+    let scene, camera, renderer, toothGroup;
+    let isWireframe = false;
+    const container = document.getElementById('three-canvas-container');
+
+    function init3D() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 1.2, 5.2);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+      scene.add(ambientLight);
+
+      const dirLight1 = new THREE.DirectionalLight(0x00f2fe, 1.8);
+      dirLight1.position.set(4, 5, 4);
+      scene.add(dirLight1);
+
+      const dirLight2 = new THREE.DirectionalLight(0x7928ca, 1.5);
+      dirLight2.position.set(-4, -3, -2);
+      scene.add(dirLight2);
+
+      // Create Tooth Assembly
+      toothGroup = new THREE.Group();
+
+      const toothMaterial = new THREE.MeshPhongMaterial({
+        color: 0xf8fafc,
+        specular: 0x00f2fe,
+        shininess: 90,
+        wireframe: false,
+        flatShading: false
+      });
+
+      // Tooth Crown (تاج السن)
+      const crownGeo = new THREE.CylinderGeometry(1.05, 0.85, 1.3, 32, 8);
+      // Smooth crown curvature
+      const crown = new THREE.Mesh(crownGeo, toothMaterial);
+      crown.position.y = 0.5;
+      crown.scale.set(1.1, 1, 0.95);
+      toothGroup.add(crown);
+
+      // Crown Cusp Caps
+      const cuspGeo = new THREE.SphereGeometry(0.45, 24, 24);
+      const c1 = new THREE.Mesh(cuspGeo, toothMaterial); c1.position.set(0.42, 1.05, 0.32); toothGroup.add(c1);
+      const c2 = new THREE.Mesh(cuspGeo, toothMaterial); c2.position.set(-0.42, 1.05, 0.32); toothGroup.add(c2);
+      const c3 = new THREE.Mesh(cuspGeo, toothMaterial); c3.position.set(0.42, 1.05, -0.32); toothGroup.add(c3);
+      const c4 = new THREE.Mesh(cuspGeo, toothMaterial); c4.position.set(-0.42, 1.05, -0.32); toothGroup.add(c4);
+
+      // Left Root (جذر أيسر)
+      const rootGeo = new THREE.ConeGeometry(0.42, 1.7, 24);
+      const root1 = new THREE.Mesh(rootGeo, toothMaterial);
+      root1.rotation.z = Math.PI;
+      root1.position.set(-0.42, -0.85, 0);
+      root1.rotation.z = Math.PI + 0.12;
+      toothGroup.add(root1);
+
+      // Right Root (جذر أيمن)
+      const root2 = new THREE.Mesh(rootGeo, toothMaterial);
+      root2.rotation.z = Math.PI - 0.12;
+      root2.position.set(0.42, -0.85, 0);
+      toothGroup.add(root2);
+
+      // Halo Particle Ring
+      const particleGeo = new THREE.BufferGeometry();
+      const count = 180;
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        const theta = Math.random() * Math.PI * 2;
+        const radius = 2.0 + Math.random() * 0.7;
+        positions[i] = Math.cos(theta) * radius;
+        positions[i + 1] = (Math.random() - 0.5) * 2.2;
+        positions[i + 2] = Math.sin(theta) * radius;
+      }
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particleMat = new THREE.PointsMaterial({ color: 0x00f2fe, size: 0.035, transparent: true, opacity: 0.8 });
+      const particleSystem = new THREE.Points(particleGeo, particleMat);
+      toothGroup.add(particleSystem);
+
+      scene.add(toothGroup);
+
+      // Mouse drag controls
+      let isDragging = false;
+      let prevMousePos = { x: 0, y: 0 };
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('mouseup', () => { isDragging = false; });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - prevMousePos.x;
+        const deltaY = e.clientY - prevMousePos.y;
+        toothGroup.rotation.y += deltaX * 0.01;
+        toothGroup.rotation.x += deltaY * 0.01;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      // Responsive Resize
+      window.addEventListener('resize', () => {
+        if (!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      animate();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (toothGroup) {
+        toothGroup.rotation.y += 0.006;
+        toothGroup.position.y = Math.sin(Date.now() * 0.002) * 0.09;
+      }
+      renderer.render(scene, camera);
+    }
+
+    function toggleWireframe() {
+      isWireframe = !isWireframe;
+      toothGroup.traverse((child) => {
+        if (child.isMesh) {
+          child.material.wireframe = isWireframe;
+          child.material.color.setHex(isWireframe ? 0x00f2fe : 0xf8fafc);
+        }
+      });
+      document.getElementById('model-status').innerText = isWireframe ? 'WIREFRAME / RAY SCAN' : 'ANATOMY SHADED';
+    }
+
+    init3D();
+
+    // 3. Virtual Mascot Bot Interactions
+    function toggleBotChat() {
+      const card = document.getElementById('bot-card');
+      card.classList.toggle('hidden');
+    }
+
+    function botInsight(type) {
+      const msg = document.getElementById('bot-message');
+      if (type === 'history') {
+        msg.innerHTML = "<strong>إعجاز السواك:</strong> أثبتت أبحاث الكيمياء الحيوية أن نبتة الأراك تفرز مادة 'السلفادورين' والكلوريدات التي تمنع ترسب الجير وتعدل درجة حموضة اللعاب طبيعياً.";
+      } else if (type === 'sharks') {
+        msg.innerHTML = "<strong>ميزة القروش:</strong> أسنان القرش مغلفة بالكامل بمركب الفلوروأباتيت النقي بنسبة 100%، لذا فإن القروش لا يمكن أن تصاب بتسوس الأسنان على الإطلاق!";
+      } else if (type === 'tips') {
+        msg.innerHTML = "<strong>طوارئ ألم العصب:</strong> تجنب وضع قرص الأسبرين مباشرة على اللثة فوق السن المؤلم؛ فهذا يسبب حروقاً كيميائية شديدة في الأنسجة دون تخفيف ألم العصب الداخلي.";
+      } else if (type === 'qr') {
+        msg.innerHTML = "<strong>ملف QR الذكي:</strong> تمكّنك المنظومة من فحص سجل صور الأشعة والمتابعة الدورية عبر كود QR يتم مسحه بكاميرا هاتفك فور مراجعة العيادة.";
+      }
+    }
+
+    function handleBooking(e) {
+      e.preventDefault();
+      alert('تم استلام طلب الاستشارة بنجاح، سيقوم فريق د. محمد محمود الأحمد بالتواصل معكم هاتفياً لترتيب الموعد الرقمي.');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
